@@ -30,7 +30,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-waterfall = 'rfind_sigmf_explorer.scripts.waterfall:make_interactive_waterfall'
+waterfall = 'rfind_sigmf_explorer.scripts.waterfall:main'
 
 [tool.black]
 target-version = ["py310"]

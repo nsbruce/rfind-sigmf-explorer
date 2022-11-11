@@ -9,6 +9,7 @@ RUN apt-get update && \
         git \
         python3.10 \
         python3-venv \
+        python-is-python3 \
         ipython3 && \
     apt-get clean
 
