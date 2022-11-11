@@ -1,0 +1,42 @@
+
+{
+	"name": "hack-zone",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/hack-zone,type=bind,consistency=cached",
+	"workspaceFolder": "/workspaces/hack-zone",
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Uncomment the next line to run commands after the container is created - for example installing curl.
+	"postCreateCommand": "git config --system --add safe.directory ${containerWorkspaceFolder} && poetry install --with dev",
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"aaron-bond.better-comments",
+				"njpwerner.autodocstring",
+				"bungcip.better-toml",
+				"Gruntfuggly.todo-tree",
+				"ms-python.python",
+				"ms-python.vscode-pylance"
+			]
+		}
+	},
+
+	// Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "nsbruce",
+	"overrideCommand": true, // runs /bin/sh -c "while sleep 1000; do :; done" instead of the service command
+	"features": {
+		"common": {
+			"username": "automatic",
+			"uid": "automatic",
+			"gid": "automatic",
+			"installZsh": true,
+			"installOhMyZsh": true,
+			"upgradePackages": true
+		}
+	}
+}

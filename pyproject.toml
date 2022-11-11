@@ -1,14 +1,20 @@
 [tool.poetry]
-name = "py-package"
+name = "rfind-sigmf-explorer"
 version = "0.1.0"
 description = ""
 authors = ["Nicholas Bruce <nsbruce@uvic.ca>"]
 readme = "README.md"
-packages = [{include = "py_package"}]
+packages = [{include = "rfind_sigmf_explorer"}]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
+numpy = "^1.23.4"
+SigMF = "^1.0.0"
+plotly = "^5.11.0"
+xarray = "^2022.11.0"
+datashader = "^0.14.2"
+holoviews = "^1.15.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -24,15 +30,14 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-generate-env = 'py_package.environment.generate:main'
+waterfall = 'rfind_sigmf_explorer.scripts.waterfall:make_interactive_waterfall'
 
 [tool.black]
-target-version = ["py39"]
+target-version = ["py310"]
 preview="True"
 exclude = '''
     (
         \.venv
-        | other_excluded_dir
     )
 '''
 
@@ -41,7 +46,7 @@ profile="black"
 skip=['.venv.']
 
 [tool.mypy]
-python_version = 3.9
+python_version = 3.10
 exclude = ['.venv']
 
 [tool.pytest.ini_options]
