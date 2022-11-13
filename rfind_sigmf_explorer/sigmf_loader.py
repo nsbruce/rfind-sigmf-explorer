@@ -2,6 +2,7 @@ import math
 from datetime import datetime
 from pathlib import Path
 
+import dask.array as da
 import numpy as np
 import numpy.typing as npt
 import sigmf  # type: ignore
@@ -27,3 +28,8 @@ def load_sigmf_full(path: Path) -> npt.NDArray[np.float64]:
     # int_time = 1/global_info[SigMFFile.SAMPLE_RATE_KEY]
     d = handle.read_samples()
     return np.array(d, dtype=np.float64)
+
+
+def load_sigmf_dask(path: Path):
+    data = da.from_array(np.memmap(path.with_suffix(sigmf.archive.SIGMF_DATASET_EXT), shape=(4800,600000), offset=0, dtype=np.dtype("f4"), mode='r'))
+    return data
