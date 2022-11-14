@@ -33,3 +33,7 @@ def load_sigmf_full(path: Path) -> npt.NDArray[np.float64]:
 def load_sigmf_dask(path: Path):
     data = da.from_array(np.memmap(path.with_suffix(sigmf.archive.SIGMF_DATASET_EXT), shape=(4800,600000), offset=0, dtype=np.dtype("f4"), mode='r'))
     return data
+
+def get_numpy_mmap(path:Path):
+    return np.memmap(path.with_suffix(path.with_suffix(sigmf.archive.SIGMF_DATASET_EXT), shape=(4800,600000), offset=0, dtype=np.dtype("f4"), mode='r'))
+
