@@ -16,6 +16,7 @@ xarray = "^2022.11.0"
 datashader = "^0.14.2"
 holoviews = "^1.15.2"
 matplotlib = "^3.6.2"
+hvplot = "^0.8.1"
 
 
 [tool.poetry.group.dev.dependencies]
