@@ -8,24 +8,24 @@ packages = [{include = "rfind_sigmf_explorer"}]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-numpy = "^1.23.4"
-SigMF = "^1.0.0"
-plotly = "^5.11.0"
-xarray = "^2022.11.0"
-datashader = "^0.14.2"
-holoviews = "^1.15.2"
-matplotlib = "^3.6.2"
-hvplot = "^0.8.1"
+python = "^3.10,<4"
+numpy = "^1.24.3"
+SigMF = "^1.1.1"
+plotly = "^5.14.1"
+xarray = "^2023.4.2"
+datashader = "^0.14.4"
+holoviews = "^1.16.0"
+matplotlib = "^3.7.1"
+hvplot = "^0.8.3"
 
 
 [tool.poetry.group.dev.dependencies]
-isort = "^5.10.1"
-black = "^22.3.0"
-mypy = "^0.960"
-pytest = "^7.1.2"
-poethepoet = "^0.13.1"
-flake8 = "^4.0.1"
+isort = "^5.12.0"
+black = "^23.3.0"
+mypy = "^1.2.0"
+pytest = "^7.3.1"
+poethepoet = "^0.20.0"
+flake8 = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -35,21 +35,15 @@ build-backend = "poetry.core.masonry.api"
 waterfall = 'rfind_sigmf_explorer.scripts.waterfall:main'
 
 [tool.black]
-target-version = ["py310"]
+target-version = ["py311"]
 preview="True"
-exclude = '''
-    (
-        \.venv
-    )
-'''
 
 [tool.isort]
 profile="black"
 skip=['.venv.']
 
 [tool.mypy]
-python_version = 3.10
-exclude = ['.venv']
+python_version = 3.11
 
 [tool.pytest.ini_options]
 testpaths = "tests"
