@@ -19,7 +19,8 @@ import xarray as xr
 
 
 # note we are pointing at the meta file
-filename = Path('/rfi-data/RFInd-calibrated-2023-05-12T20.sigmf-meta')
+filename = Path('/data/RFInd-calibrated-2023-11-26T18.sigmf-meta')
+filename1 = Path('/data/RFInd-calibrated-2023-11-27T18.sigmf-meta')
 
 
 
@@ -36,8 +37,19 @@ num_channels = handle.get_num_channels()
 # end_datetime = start_datetime+timedelta(seconds=num_integrations*integration_time)
 # yvals = np.arange(start_datetime, end_datetime, timedelta(seconds=integration_time)).astype(datetime)
 yvals = np.arange(num_integrations)*integration_time
+xvals = np.arange(num_channels)*2/num_channels
 
 # the following will plot an interactive waterwall of the 1 hour dataset
 arr = np.memmap(filename.with_suffix(sigmf.archive.SIGMF_DATASET_EXT), shape=(num_integrations,num_channels), offset=0, dtype=np.dtype("f4"), mode='r')
-arr = xr.DataArray(arr, dims=("seconds", "Hz"), coords={'seconds': yvals, "Hz": np.arange(num_channels)*2e9/num_channels})
-pn.Row(arr.hvplot(width=1000, height=1000, rasterize=True, cmap=viridis, aggregator='max', cnorm='log').opts(clabel='dBm/Hz')).show()
+arr = xr.DataArray(arr, dims=("seconds", "GHz"), coords={'seconds': yvals, "GHz": xvals})
+arr1 = np.memmap(filename1.with_suffix(sigmf.archive.SIGMF_DATASET_EXT), shape=(num_integrations,num_channels), offset=0, dtype=np.dtype("f4"), mode='r')
+arr1 = xr.DataArray(arr1, dims=("seconds", "GHz"), coords={'seconds': yvals, "GHz": xvals})
+
+column = pn.Column()
+column.append(pn.pane.Markdown('# RFI comparison'))
+row = pn.Row()
+row.append(pn.Column('Sun. Nov. 26',  arr.hvplot(width=800, height=800, rasterize=True, cmap=viridis, aggregator='max', cnorm='log', clim=(5 * 10**-18, 5 * 10**-12))))
+row.append(pn.Column('Mon. Nov. 27', arr1.hvplot(width=800, height=800, rasterize=True, cmap=viridis, aggregator='max', cnorm='log', clim=(5 * 10**-18, 5 * 10**-12)).opts(clabel='dBm/Hz')))
+
+column.append(row)
+column.show(port=9000, websocket_origin=['localhost:9000','rfi-proc-01.drao.nrc.ca:9000'])
